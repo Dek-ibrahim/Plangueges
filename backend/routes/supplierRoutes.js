@@ -1,7 +1,7 @@
 // adminSupplies.js
 const express = require('express');
 const router = express.Router();
-const adminSuppliesController = require('../controllers/adminSuppliesController');
+const SuppliesController = require('../controllers/SuppliesController');
 
 // Define routes for admin supplies
 router.get('all', SuppliesController.getAllSupplies);
