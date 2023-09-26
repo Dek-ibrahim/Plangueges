@@ -1,14 +1,13 @@
 const express = require('express');
 const app = express();
-const adminSuppliesRouter = require('./routes/adminSupplies');
+const port = 3000;
 
-app.use(express.json());
-
-// Use the admin supplies router
-app.use('/admin/supplies', adminSuppliesRouter);
+// Define a route
+app.get('/', (req, res) => {
+  res.send('Hello, Express!');
+});
 
 // Start the server
-const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server is listening at http://localhost:${port}`);
 });
