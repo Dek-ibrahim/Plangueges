@@ -3,10 +3,10 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 // Get all supplies
-async function getAllSupplies(req, res) {
+async function getAllSupplier(req, res) {
   try {
-    const supplies = await prisma.supply.findMany();
-    res.json(supplies);
+    const supplier = await prisma.supplier.findMany();
+    res.json(supplier);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -14,7 +14,7 @@ async function getAllSupplies(req, res) {
 }
 
 // Create a new supply
-async function createSupply(req, res) {
+async function createSupplier(req, res) {
   const { name, quantity } = req.body;
   try {
     const supply = await prisma.supply.create({
@@ -31,11 +31,11 @@ async function createSupply(req, res) {
 }
 
 // Update a supply by ID
-async function updateSupply(req, res) {
+async function updateSupplier(req, res) {
   const { id } = req.params;
   const { name, quantity } = req.body;
   try {
-    const updatedSupply = await prisma.supply.update({
+    const updatedSupplier = await prisma.supplier.update({
       where: {
         id: parseInt(id),
       },
@@ -68,7 +68,7 @@ async function deleteSupply(req, res) {
 }
 
 module.exports = {
-  getAllSupplies,
+  getAllSupplier,
   createSupply,
   updateSupply,
   deleteSupply,
