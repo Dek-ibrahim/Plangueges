@@ -7,10 +7,10 @@ const customerController = require('../controllers/customerController');
 
 
 // Define routes for customers
-router.get('all', customerController.getAllCustomers);
-router.get('all/:id', customerController.getCustomerById);
-router.post('new', customerController.createCustomer);
-router.put('update/:id', customerController.updateCustomer);
-router.delete('delete/:id', customerController.deleteCustomer);
+router.get('/all', customerController.getAllCustomers);
+router.get('/all/:id', customerController.getCustomerById);
+router.post('/new', customerController.createCustomer);
+router.put('/update/:id', customerController.updateCustomer);
+router.delete('/delete/:id', customerController.deleteCustomer);
 
 module.exports = router;
