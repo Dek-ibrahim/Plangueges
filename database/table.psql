@@ -1,8 +1,0 @@
-CREATE TABLE 
-    customers(
-        customers_id INTEGER PRIMARY KEY NOT NOT NULL,
-        customersName text NUll,
-        customersTell text NULL,
-        customersType  text NULL,
-        balace decimal (18 , 2) NULL
-    )
