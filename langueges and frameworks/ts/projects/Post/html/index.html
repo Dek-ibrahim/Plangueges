@@ -47,27 +47,23 @@
                         d="M19 9l-7 7-7-7"></path>
                 </svg>
                 <span class="text-sm">Comment</span>
-                <span class="ml-1 text-sm text-gray-600">4 Comments</span>
+                <span class="ml-1 text-sm text-gray-600" id="commentCount">4 Comments</span>
             </div>
             <div class="flex items-center">
-                <button onclick="deletePost()" class="flex items-center">
+                <button onclick="sharePost()" class="flex items-center">
                     <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-linecap="round"
                         stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
                         <path
-                            d="M19 9l-7 7-7-7"></path>
+                            d="M12 19v2m0 0v-8m0 0l-3 3m3-3l3 3m-3-3l3-3m0 0l3 3m-3-3l-3 3"></path>
                     </svg>
-                    <span class="text-sm">Delete</span>
+                    <span class="text-sm">Share</span>
                 </button>
             </div>
         </div>
 
         <!-- Comments -->
         <div class="mb-4" id="commentsSection">
-            <div class="flex items-center mb-2">
-                <img src="https://placekitten.com/40/40" alt="User Avatar" class="w-6 h-6 rounded-full mr-2">
-                <p class="text-sm font-semibold">Jane Smith</p>
-            </div>
-            <p class="text-gray-600 text-sm">Great post! 🐱</p>
+            <!-- Comments will be dynamically added here -->
         </div>
 
         <!-- Comment Input -->
@@ -92,6 +88,10 @@
         <button onclick="toggleUpdatePostInput()"
             class="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-full">Update Post</button>
 
+        <!-- View More Comments Button -->
+        <button onclick="viewMoreComments()"
+            class="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-full">View More Comments</button>
+
     </div>
 
     <script>
@@ -100,7 +100,9 @@
 
         // Simple array to store comments
         const comments = [
-            { username: 'Jane Smith', text: 'Great post! 🐱' },
+            { username: 'Jane Smith', text: 'Great post! 🐱', timestamp: '2 hours ago' },
+            { username: 'Bob Johnson', text: 'Nice picture!', timestamp: '1 hour ago' },
+            { username: 'Alice Doe', text: 'I love cats!', timestamp: '30 minutes ago' },
             // Add more comments if needed
         ];
 
@@ -132,8 +134,9 @@
             const commentText = commentInput.value.trim();
 
             if (commentText !== '') {
-                // Add the new comment to the array
-                comments.push({ username: 'John Doe', text: commentText });
+                // Add the new comment to the array with a timestamp
+                const timestamp = generateTimestamp();
+                comments.push({ username: 'John Doe', text: commentText, timestamp });
 
                 // Update the UI to display all comments
                 updateCommentsUI();
@@ -141,6 +144,14 @@
                 // Clear the input field
                 commentInput.value = '';
             }
+        }
+
+        // Function to generate a timestamp for comments
+        function generateTimestamp() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            return `${hours}:${minutes > 9 ? minutes : '0' + minutes}`;
         }
 
         // Function to update the comments section in the UI
@@ -166,12 +177,21 @@
                 commentText.classList.add('text-gray-600', 'text-sm');
                 commentText.textContent = comment.text;
 
+                const timestamp = document.createElement('p');
+                timestamp.classList.add('text-gray-500', 'text-xs');
+                timestamp.textContent = comment.timestamp;
+
                 commentContainer.appendChild(userAvatar);
                 commentContainer.appendChild(username);
                 commentContainer.appendChild(commentText);
+                commentContainer.appendChild(timestamp);
 
                 commentsSection.appendChild(commentContainer);
             });
+
+            // Update the comment count
+            const commentCountElement = document.getElementById('commentCount');
+            commentCountElement.textContent = `${comments.length} ${comments.length === 1 ? 'Comment' : 'Comments'}`;
         }
 
         // Function to delete the post
@@ -183,6 +203,12 @@
                 // Hide the post container (you may want to remove it from the DOM)
                 document.querySelector('.bg-white').style.display = 'none';
             }
+        }
+
+        // Function to share the post
+        function sharePost() {
+            // For simplicity, just show an alert, but you can implement actual sharing functionality
+            alert('Post shared!');
         }
 
         // Function to toggle the update post input field
@@ -216,6 +242,21 @@
                 // Hide the update post input
                 toggleUpdatePostInput();
             }
+        }
+
+        // Function to view more comments
+        function viewMoreComments() {
+            // For simplicity, just add a few more sample comments
+            const moreComments = [
+                { username: 'Eva Johnson', text: 'This is awesome!', timestamp: '10 minutes ago' },
+                { username: 'Chris Wilson', text: 'Love the picture!', timestamp: '5 minutes ago' },
+            ];
+
+            // Add more comments to the existing array
+            comments.push(...moreComments);
+
+            // Update the UI to display all comments
+            updateCommentsUI();
         }
 
         // Function to update the timestamp
